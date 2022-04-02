@@ -26,7 +26,7 @@ namespace TokenDemo.Untity
                 new Claim("Love","c#"),
                 new Claim("whhfhf", "wandale"),
                 new Claim("Demo", "test"),
-
+                new Claim(ClaimTypes.Role, "admin"),
             };
             SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_JwtTokenOption.SecurityKey));
             SigningCredentials creds = new SigningCredentials(key,SecurityAlgorithms.HmacSha256);

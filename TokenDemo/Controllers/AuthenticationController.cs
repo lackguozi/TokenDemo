@@ -50,16 +50,17 @@ namespace TokenDemo.Controllers
         /// <param name="pwd"></param>
         /// <returns></returns>
         [HttpPost]
-        public string Login(string name,string pwd)
+        [Route("[action]")]
+        public IActionResult Login(string name,string pwd)
         {
             if(name=="one"&& pwd == "789456")
             {
                string token = _jwtservice.GetJWTToken(name, pwd);
-                return JsonConvert.SerializeObject(new { res = true, token });
+                return Ok(new { res = true, token });
             }
             else
             {
-                return JsonConvert.SerializeObject(new { res = false, token ="" });
+                return BadRequest(new { res = false, token ="" });
             }
             
         }
