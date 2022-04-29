@@ -15,6 +15,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using TokenDemo.Filters;
 using TokenDemo.Untity;
 
 namespace TokenDemo
@@ -56,7 +57,9 @@ namespace TokenDemo
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWTTokenOptions:SecurityKey"]))
                     };
                 });
-            services.AddControllers();
+            //È«¾Ö¹ýÂË
+            services.AddControllers(options => { options.Filters.Add<TestActionAttribute>(); });
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

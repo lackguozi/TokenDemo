@@ -5,12 +5,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TokenDemo.Filters;
 using TokenDemo.Untity;
 
 namespace TokenDemo.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("[controller]/[action]")]
     public class AuthenticationController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
@@ -50,7 +51,7 @@ namespace TokenDemo.Controllers
         /// <param name="pwd"></param>
         /// <returns></returns>
         [HttpPost]
-        [Route("[action]")]
+        [TestAction]  方法过滤
         public IActionResult Login(string name,string pwd)
         {
             if(name=="one"&& pwd == "789456")
