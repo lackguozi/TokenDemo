@@ -51,7 +51,7 @@ namespace TokenDemo.Controllers
         /// <param name="pwd"></param>
         /// <returns></returns>
         [HttpPost]
-        [TestAction]  方法过滤
+        [TestAction]  //方法过滤
         public IActionResult Login(string name,string pwd)
         {
             if(name=="one"&& pwd == "789456")
