@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <button type="button" id="btnDownload1">分片下载测试</button>
+    <button type="button" id="btnDownload2">一次下载测试</button>
+    <script src="layui/jquery-3.5.1.min.js"></script>
+    <script>
+        $("#btnDownload1").on("click", function (e) {
+            clusterdownload();
+        });
+        $("#btnDownload2").on("click", function (e) {
+            clusterdownloadOne();
+        });
+        var host = "https://localhost:5001/";
+        function clusterdownload() {
+            var data = {
+                index: "0",
+                fileName: '我的第一本算法书',
+                fileExt: '.pdf',
+            };
+
+
+            //Ajax提交
+            $.ajax({
+                url: host + "Download/FileDownload",
+                type: "POST",
+                data: JSON.stringify(data),
+                contentType: "application/json; charset=utf-8",
+
+
+                xhrFields: { responseType: 'blob' },
+
+
+                timeout: 36000,
+                success: function (res) {
+                    console.log("success");
+                    let blob = new Blob([res], { type: "application/pdf" })
+                    let url1 = window.URL.createObjectURL(blob);
+                    let a = document.createElement('a');
+                    a.href = url1;
+                    a.click();
+                    window.URL.revokeObjectURL(url1);
+                },
+                
+                complete: function (xhr, status) {
+                    console.log(status);
+                }
+            });
+        }
+        function clusterdownloadOne() {
+            var data = {
+                index: "0",
+                fileName: '我的第一本算法书',
+                fileExt: '.pdf',
+            };
+
+
+            //Ajax提交
+            $.ajax({
+                url: host + "Download/FileDownloadOne",
+                type: "POST",
+                data: JSON.stringify(data),
+                contentType: "application/json; charset=utf-8",
+                xhrFields: { responseType: 'blob' },
+                
+                success: function (res) {
+                    console.log("success");
+                    let blob = new Blob([res], { type: "application/pdf" })
+                    let url1 = window.URL.createObjectURL(blob);
+                    let a = document.createElement('a');
+                    a.href = url1;
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                },
+
+                complete: function (xhr, status) {
+                    console.log(status);
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

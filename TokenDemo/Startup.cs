@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -33,7 +34,10 @@ namespace TokenDemo
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<ICustomJWTService,CustomHSJWTService>();
+            services.AddTransient<IDownloadFileService, DownloadFileService>();
             services.Configure<JWTTokenOptions>(Configuration.GetSection("JWTTokenOptions"));
+            services.AddCors(option => option.AddPolicy("cors", builder => builder.AllowAnyMethod().SetIsOriginAllowed(_=>true).AllowCredentials()));
+
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
@@ -58,7 +62,8 @@ namespace TokenDemo
                     };
                 });
             //全局过滤
-            services.AddControllers(options => { options.Filters.Add<TestActionAttribute>(); });
+            services.AddControllers();
+            //services.AddControllers(options => { options.Filters.Add<TestActionAttribute>(); });
             
         }
 
@@ -69,10 +74,15 @@ namespace TokenDemo
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "webfile")), RequestPath = "/file"
+            });
+            
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            //app.UseCors("cors");
             //鉴权
             app.UseAuthentication();
             //授权

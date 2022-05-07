@@ -13,7 +13,7 @@ namespace TokenDemo.Filters
         public void OnActionExecuting(ActionExecutingContext context)
         {
             Console.WriteLine("动作完成之前1");
-            Console.WriteLine(context.HttpContext.Request.Headers["Token"].ToString());
+            Console.WriteLine(context.HttpContext.Request.Headers["Connection"].ToString());
             Console.WriteLine("动作完成之前");
         }
     }
