@@ -291,11 +291,12 @@
                         
                         success: function (res) {
                             index++;
+                            fileData.push(res);
                             if (index <= maxCount) {
-                                fileData.push(res);
+                               
                                 download();
                             } else {
-                                fileData.push(res);//最后一次的加上去
+                               
                                 let blob = new Blob(fileData, { type: "application/pdf" });
                                 let url1 = window.URL.createObjectURL(blob);
                                 let a = document.createElement('a');
