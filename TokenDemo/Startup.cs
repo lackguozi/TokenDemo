@@ -74,6 +74,13 @@ namespace TokenDemo
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseSwagger();
+            //启用中间件服务对swagger-ui，指定Swagger JSON终结点
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
+            //启用静态文件
             app.UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "webfile")), RequestPath = "/file"
@@ -88,12 +95,7 @@ namespace TokenDemo
             //授权
             app.UseAuthorization();
             
-            app.UseSwagger();
-            //启用中间件服务对swagger-ui，指定Swagger JSON终结点
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-            });
+           
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
