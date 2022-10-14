@@ -13,6 +13,11 @@ namespace TokenDemo.Untity
 {
     public class DownloadFileService: IDownloadFileService
     {
+        /// <summary>
+        /// 请求需要下载几次
+        /// </summary>
+        /// <param name="fileInfo"></param>
+        /// <returns></returns>
         public MessageEntity RequestDownloadFile(Dictionary<string, string> fileInfo)
         {
             MessageEntity message = new MessageEntity();
@@ -65,6 +70,14 @@ namespace TokenDemo.Untity
             }
             return message;
         }
+        /// <summary>
+        /// 分批次下载
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="fileName"></param>
+        /// <param name="fileExt"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public async Task<byte[]> FileDownload(int index ,string fileName,string fileExt)
         {
             //MessageEntity message = new MessageEntity();
@@ -105,6 +118,14 @@ namespace TokenDemo.Untity
                 return datas;
             }
         }
+        /// <summary>
+        /// 一次性下载
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="fileName"></param>
+        /// <param name="fileExt"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public async Task<byte[]> FileDownloadOne(int index, string fileName, string fileExt)
         {
             string filePath = "e:\\" + $"{fileName}{fileExt}";
