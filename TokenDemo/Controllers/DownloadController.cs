@@ -83,6 +83,7 @@ namespace TokenDemo.Controllers
             return File(datas, "application/pdf","opbook");
 
         }
+        [HttpPost]
         public async Task<IActionResult> FileDownloadOne(Dictionary<string, string> fileInfo)
         {
             Console.WriteLine("FileDownloadbegin");
